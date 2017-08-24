@@ -5,6 +5,9 @@ set -m
 
 /entrypoint.sh couchbase-server &
 
+COUCHBASE_MASTER=$COUCHBASE-MASTER_SERVICE_HOST
+COUCHBASE_MASTER_PORT=$COUCHBASE-MASTER_SERVICE_PORT
+
 sleep 15
 
 # Setup index and memory quota
@@ -34,9 +37,9 @@ if [ "$TYPE" = "WORKER" ]; then
 
   echo "Auto Rebalance: $AUTO_REBALANCE"
   if [ "$AUTO_REBALANCE" = "true" ]; then
-    couchbase-cli rebalance --cluster=$COUCHBASE_MASTER:8091 --user=Administrator --password=password --server-add=$IP --server-add-username=Administrator --server-add-password=password
+    couchbase-cli rebalance --cluster=$COUCHBASE_MASTER:$COUCHBASE_MASTER_PORT --user=Administrator --password=password --server-add=$IP --server-add-username=Administrator --server-add-password=password
   else
-    couchbase-cli server-add --cluster=$COUCHBASE_MASTER:8091 --user=Administrator --password=password --server-add=$IP --server-add-username=Administrator --server-add-password=password
+    couchbase-cli server-add --cluster=$COUCHBASE_MASTER:$COUCHBASE_MASTER_PORT --user=Administrator --password=password --server-add=$IP --server-add-username=Administrator --server-add-password=password
   fi;
 fi;
 
