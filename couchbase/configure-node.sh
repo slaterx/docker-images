@@ -37,9 +37,10 @@ if [ "$TYPE" = "WORKER" ]; then
 
   echo "Auto Rebalance: $AUTO_REBALANCE"
   if [ "$AUTO_REBALANCE" = "true" ]; then
-    couchbase-cli rebalance -c $COUCHBASE_MASTER:$COUCHBASE_MASTER_PORT -u Administrator -p password --server-add=$IP:8091 --server-add-username=Administrator --server-add-password=password
+    couchbase-cli server-add -c $COUCHBASE_MASTER:$COUCHBASE_MASTER_PORT -u Administrator -p password --server-add=$IP --server-add-username=Administrator --server-add-password=password
+    couchbase-cli rebalance -c $COUCHBASE_MASTER:$COUCHBASE_MASTER_PORT -u Administrator -p password
   else
-    couchbase-cli server-add -c $COUCHBASE_MASTER:$COUCHBASE_MASTER_PORT -u Administrator -p password --server-add=$IP:8091 --server-add-username=Administrator --server-add-password=password
+    couchbase-cli server-add -c $COUCHBASE_MASTER:$COUCHBASE_MASTER_PORT -u Administrator -p password --server-add=$IP --server-add-username=Administrator --server-add-password=password
   fi;
 fi;
 
