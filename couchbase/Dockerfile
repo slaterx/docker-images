@@ -1,5 +1,9 @@
 FROM couchbase/server:5.0.0-beta2
 
+COPY run /etc/service/couchbase-server/run
+
+COPY entrypoint.sh /
+
 COPY configure-node.sh /opt/couchbase
 
 RUN chgrp -R root /opt/couchbase && chmod 775 /opt/couchbase/configure-node.sh
